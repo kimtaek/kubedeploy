@@ -1,3 +1,5 @@
+![Github Action](https://github.com/kimtaek/kubedeploy/workflows/Build%20and%20Publish/badge.svg)
+
 ### usage
 
 ```bash
@@ -11,5 +13,5 @@ docker run --rm \
    -e PLUGIN_CONTAINER=api \
    -e PLUGIN_REPOSITORY=my/repository \
    -e PLUGIN_TAG=hash \
-   kubedeploy
+   jinze1991/kubedeploy
 ```
