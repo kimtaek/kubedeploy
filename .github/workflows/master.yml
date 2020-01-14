@@ -1,0 +1,22 @@
+name: Build and Publish
+on: [push]
+
+jobs:
+  buildAndPublish:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Build the Docker container image
+        run: docker build -f Dockerfile -t jinze1991/kubedeploy .
+
+      - name: Push the image to Docker hub
+        run: |
+          echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
+          BRANCH_NAME=$(echo $GITHUB_REF | grep -oP '(?<=refs\/heads\/).*')
+          docker tag jinze1991/kubedeploy:latest jinze1991/kubedeploy:${BRANCH_NAME}
+          docker push jinze1991/kubedeploy:${BRANCH_NAME}
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
