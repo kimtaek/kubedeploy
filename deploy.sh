@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [ ! -z ${PLUGIN_DEBUG} ]; then
+  env
+fi
+
 echo ${PLUGIN_TOKEN} | base64 -d > token
 echo ${PLUGIN_CERT} | base64 -d > ca
 

@@ -13,5 +13,6 @@ docker run --rm \
    -e PLUGIN_CONTAINER=api \
    -e PLUGIN_REPOSITORY=my/repository \
    -e PLUGIN_TAG=hash \
+   -e PLUGIN_DEBUG=true \
    jinze1991/kubedeploy
 ```
