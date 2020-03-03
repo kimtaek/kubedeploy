@@ -2,6 +2,7 @@
 
 if [ ! -z ${PLUGIN_DEBUG} ]; then
   env
+  kubectl version
 fi
 
 echo ${PLUGIN_TOKEN} | base64 -d > token
@@ -14,7 +15,6 @@ kubectl config use-context default
 
 kubectl -n ${PLUGIN_NAMESPACE} set image deployment/${PLUGIN_DEPLOYMENT} ${PLUGIN_CONTAINER}=${PLUGIN_REPOSITORY}:${PLUGIN_TAG} --record
 
-SH=$(kubectl config unset users.${PLUGIN_SERVICE_ACCOUNT})
-SH=$(kubectl config unset contexts.default)
-SH=$(kubectl config unset clusters.default)
-SH=$(rm -rf /root/.kube token ca)
+if [ ! -z ${PLUGIN_WATCH} ]; then
+  kubectl -n ${PLUGIN_NAMESPACE} rollout status deployment/${PLUGIN_DEPLOYMENT} --watch --timeout 3m
+fi
